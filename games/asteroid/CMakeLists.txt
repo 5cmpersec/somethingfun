@@ -24,6 +24,7 @@ add_executable(app
                Animator.cpp
                Asteroid.cpp
                SpaceShip.cpp
+               Explosion.cpp
                Game.cpp
                main.cpp)
 

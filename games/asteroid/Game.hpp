@@ -4,6 +4,7 @@
 #include <SFML/System.hpp>
 
 #include "Asteroid.hpp"
+#include "Explosion.hpp"
 #include "SpaceShip.hpp"
 
 class Game final : sf::NonCopyable {
@@ -20,4 +21,5 @@ class Game final : sf::NonCopyable {
   sf::RenderWindow window_;
   SpaceShip spaceShip_;
   std::vector<Asteroid> asteroids_;
+  Explosion explosion_;
 };

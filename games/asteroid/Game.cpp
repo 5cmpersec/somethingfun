@@ -5,7 +5,8 @@
 Game::Game()
     : window_(sf::VideoMode(1200, 800), "Asteroid v1"),
       spaceShip_{},
-      asteroids_{rand() % 90 + 10} {}
+      asteroids_{rand() % 90 + 10},
+      explosion_{} {}
 
 void Game::run(int fps) {
   sf::Clock clock{};
@@ -47,6 +48,7 @@ void Game::update([[maybe_unused]] sf::Time time_per_frame) {
   for (auto& a : asteroids_) {
     a.update(time_per_frame);
   }
+  explosion_.update(time_per_frame);
 }
 
 void Game::render() {
@@ -57,6 +59,7 @@ void Game::render() {
   }
 
   window_.draw(spaceShip_);
+  window_.draw(explosion_);
 
   window_.display();
 }

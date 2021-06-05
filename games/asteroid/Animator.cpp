@@ -15,7 +15,7 @@ void Animator::update(const sf::Time& elapsed) {
 
   if (animation_.looping) {
     current_frame %= num_frames;
-  } else {
+  } else if (current_frame >= num_frames) {
     current_frame = num_frames - 1;
   }
 
