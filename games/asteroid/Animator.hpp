@@ -7,22 +7,21 @@
 #include <vector>
 
 struct Animation {
-    std::string name{""};
-    sf::Time duration{sf::Time::Zero};
-    bool looping{false};
-    std::vector<sf::IntRect> frames{};
+  std::string name{""};
+  sf::Time duration{sf::Time::Zero};
+  bool looping{false};
+  std::vector<sf::IntRect> frames{};
 };
 
-class Animator
-{
-public:
-    Animator(sf::Sprite& sprite, Animation animation);
+class Animator {
+ public:
+  Animator(sf::Sprite& sprite, Animation animation);
 
-    void update(const sf::Time& elapsed);
+  void update(const sf::Time& elapsed);
 
-private:
-    sf::Sprite& sprite_;
-    Animation animation_;
+ private:
+  sf::Sprite& sprite_;
+  Animation animation_;
 
-    sf::Time current_time_{sf::Time::Zero};
+  sf::Time current_time_{sf::Time::Zero};
 };

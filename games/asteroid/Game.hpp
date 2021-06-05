@@ -6,19 +6,18 @@
 #include "Asteroid.hpp"
 #include "SpaceShip.hpp"
 
-class Game final: sf::NonCopyable
-{
-public:
-    Game();
-    void run(int fps);
+class Game final : sf::NonCopyable {
+ public:
+  Game();
+  void run(int fps);
 
-private:
-    void processEvents();
-    void update(sf::Time delta);
-    void render();
+ private:
+  void processEvents();
+  void update(sf::Time delta);
+  void render();
 
-private:
-    sf::RenderWindow window_;
-    SpaceShip spaceShip_;
-    std::vector<Asteroid> asteroids_;
+ private:
+  sf::RenderWindow window_;
+  SpaceShip spaceShip_;
+  std::vector<Asteroid> asteroids_;
 };
