@@ -1,8 +1,15 @@
 #include "Game.hpp"
 
-int main() {
-  Game g{};
-  g.run(180);
+#include <iostream>
 
-  return 0;
+int main() {
+  try {
+    Game g{};
+    g.run(180);
+  } catch (const std::exception& e) {
+    std::cerr << "Exception: " << e.what() << std::endl;
+    return EXIT_FAILURE;
+  }
+
+  return EXIT_SUCCESS;
 }

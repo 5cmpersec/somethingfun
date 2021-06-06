@@ -1,5 +1,7 @@
 #include "AssetManager.hpp"
 
+#include <cstdlib>
+
 AssetManager& AssetManager::getInstance() {
   static AssetManager instance;
   return instance;
@@ -18,4 +20,12 @@ sf::Texture& AssetManager::GetTexture(std::string_view filename) {
     m_Textures[filepath] = texture;
     return m_Textures.at(filepath);
   }
+}
+
+std::string AssetManager::ResourcesDirectory() {
+  auto* dir = std::getenv("RESOURCES_DIR");
+  if (dir == nullptr) {
+    return "";
+  }
+  return dir;
 }
