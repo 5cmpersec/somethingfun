@@ -8,7 +8,7 @@
 constexpr float DEG2RAD = 0.0174532925f;
 
 SpaceShip::SpaceShip()
-    : sprite_{AssetManager::getInstance().GetTexture("../res/spaceship.png")},
+    : sprite_{AssetManager::getInstance().GetTexture("spaceship.png")},
       x_{300},
       y_{300},
       angle_{0.0},

@@ -6,15 +6,16 @@ AssetManager& AssetManager::getInstance() {
 }
 
 sf::Texture& AssetManager::GetTexture(std::string_view filename) {
-  const auto& it = m_Textures.find(filename);
+  const std::string filepath = m_resources_dir + '/' + std::string(filename);
+  const auto& it = m_Textures.find(filepath);
   if (it != m_Textures.end()) {
     return it->second;
   } else {
     sf::Texture texture;
-    if (!texture.loadFromFile(std::string(filename))) {
-      throw std::runtime_error("Cannot load texture: " + std::string(filename));
+    if (!texture.loadFromFile(filepath)) {
+      throw std::runtime_error("Cannot load texture: " + filepath);
     }
-    m_Textures[filename] = texture;
-    return m_Textures.at(filename);
+    m_Textures[filepath] = texture;
+    return m_Textures.at(filepath);
   }
 }

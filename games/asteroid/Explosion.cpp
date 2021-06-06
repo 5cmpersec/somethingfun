@@ -10,8 +10,7 @@
 constexpr float DEG2RAD = 0.0174532925f;
 
 Explosion::Explosion()
-    : sprite_{AssetManager::getInstance().GetTexture(
-          "../res/explosion_type_A.png")},
+    : sprite_{AssetManager::getInstance().GetTexture("explosion.png")},
       x_{600},
       y_{400} {
   sprite_.setPosition(x_, y_);

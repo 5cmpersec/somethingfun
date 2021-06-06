@@ -9,7 +9,7 @@
 constexpr float DEG2RAD = 0.0174532925f;
 
 Asteroid::Asteroid()
-    : sprite_{AssetManager::getInstance().GetTexture("../res/asteroids.png")},
+    : sprite_{AssetManager::getInstance().GetTexture("asteroids.png")},
       x_{std::rand() % 1200},
       y_{std::rand() % 800},
       angle_{std::rand() % 360},
