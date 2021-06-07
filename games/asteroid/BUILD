@@ -9,29 +9,29 @@ filegroup(
 cc_binary(
     name = "asteroid",
     srcs = [
-        "Asteroid.cpp",
-        "SpaceShip.cpp",
-        "Game.cpp",
-        "main.cpp",
-        "Explosion.cpp",
         "Animator.cpp",
-        "AssetManager.cpp",
-        "Explosion.hpp",
-        "Asteroid.hpp",
         "Animator.hpp",
-        "Game.hpp",
+        "AssetManager.cpp",
         "AssetManager.hpp",
+        "Asteroid.cpp",
+        "Asteroid.hpp",
+        "Explosion.cpp",
+        "Explosion.hpp",
+        "Game.cpp",
+        "Game.hpp",
+        "SpaceShip.cpp",
         "SpaceShip.hpp",
+        "main.cpp",
     ],
+    data = [":resources"],
+    env = {
+        "RESOURCES_DIR": "$(location :resources)",
+    },
     visibility = [
         "//visibility:public",
     ],
-    data = [":resources"],
     deps = [
         "@sfml_hdrs//:graphics",
         "@sfml_hdrs//:system",
     ],
-    env = {
-        "RESOURCES_DIR": "$(location :resources)",
-    },
 )
