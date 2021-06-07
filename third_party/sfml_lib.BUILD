@@ -11,39 +11,39 @@ cc_library(
     name = "window",
     srcs = ["libsfml-window.so"],
     linkopts = ["-lsfml-window"],
+    visibility = ["//visibility:public"],
     deps = [
         ":system",
     ],
-    visibility = ["//visibility:public"],
 )
 
 cc_library(
     name = "graphics",
     srcs = ["libsfml-graphics.so"],
     linkopts = ["-lsfml-graphics"],
-    deps = [
-        ":window",
-        ":system",
-    ],
     visibility = ["//visibility:public"],
+    deps = [
+        ":system",
+        ":window",
+    ],
 )
 
 cc_library(
     name = "audio",
     srcs = ["libsfml-audio.so"],
     linkopts = ["-lsfml-audio"],
+    visibility = ["//visibility:public"],
     deps = [
         ":system",
     ],
-    visibility = ["//visibility:public"],
 )
 
 cc_library(
     name = "network",
     srcs = ["libsfml-network.so"],
     linkopts = ["-lsfml-network"],
+    visibility = ["//visibility:public"],
     deps = [
         ":system",
     ],
-    visibility = ["//visibility:public"],
 )

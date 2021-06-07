@@ -9,9 +9,9 @@ cc_library(
     ]),
     include_prefix = "SFML",
     visibility = ["//visibility:public"],
-    deps =[
+    deps = [
         "@sfml_lib//:system",
-    ]
+    ],
 )
 
 cc_library(
@@ -21,11 +21,11 @@ cc_library(
         "Window/*",
     ]),
     include_prefix = "SFML",
+    visibility = ["//visibility:public"],
     deps = [
         ":system",
         "@sfml_lib//:window",
     ],
-    visibility = ["//visibility:public"],
 )
 
 cc_library(
@@ -35,12 +35,12 @@ cc_library(
         "Graphics/*",
     ]),
     include_prefix = "SFML",
+    visibility = ["//visibility:public"],
     deps = [
-        ":window",
         ":system",
+        ":window",
         "@sfml_lib//:graphics",
     ],
-    visibility = ["//visibility:public"],
 )
 
 cc_library(
@@ -50,10 +50,10 @@ cc_library(
         "Audio/*",
     ]),
     include_prefix = "SFML",
+    visibility = ["//visibility:public"],
     deps = [
         ":system",
     ],
-    visibility = ["//visibility:public"],
 )
 
 cc_library(
@@ -63,8 +63,8 @@ cc_library(
         "Network/*",
     ]),
     include_prefix = "SFML",
+    visibility = ["//visibility:public"],
     deps = [
         ":system",
     ],
-    visibility = ["//visibility:public"],
 )
