@@ -33,5 +33,6 @@ cc_binary(
     deps = [
         "@sfml_hdrs//:graphics",
         "@sfml_hdrs//:system",
+        "@spdlog"
     ],
 )

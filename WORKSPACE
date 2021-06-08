@@ -20,3 +20,10 @@ new_git_repository(
     build_file = "//third_party:ftxui.BUILD",
     remote = "https://github.com/ArthurSonzogni/FTXUI.git",
 )
+
+new_git_repository(
+    name = "spdlog",
+    branch = "v1.8.5",
+    build_file = "//third_party:spdlog.BUILD",
+    remote = "https://github.com/gabime/spdlog.git",
+)

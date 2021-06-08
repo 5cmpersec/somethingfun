@@ -2,12 +2,14 @@
 
 #include <iostream>
 
+#include <spdlog/spdlog.h>
+
 int main() {
   try {
     Game g{};
     g.run(180);
   } catch (const std::exception& e) {
-    std::cerr << "Exception: " << e.what() << std::endl;
+    spdlog::error("Exception: {}", e.what());
     return EXIT_FAILURE;
   }
 
