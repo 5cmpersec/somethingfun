@@ -9,17 +9,18 @@
 constexpr float DEG2RAD = 0.0174532925f;
 
 Asteroid::Asteroid()
-    : sprite_{AssetManager::getInstance().GetTexture("asteroids.png")},
-      x_{std::rand() % 1200},
+    : x_{std::rand() % 1200},
       y_{std::rand() % 800},
       angle_{std::rand() % 360},
       speed_{std::rand() % 15 + 1},
       scale_{(std::rand() % 8 + 1) * 0.1} {
-  sprite_.setPosition(x_, y_);
-  sprite_.setTextureRect(sf::IntRect(0, 0, 128, 128));
-  sprite_.setOrigin(64, 64);
-  sprite_.setScale(scale_, scale_);
-  sprite_.setRotation(angle_);
+  sprite_ = std::make_shared<sf::Sprite>(
+      AssetManager::getInstance().GetTexture("asteroids.png"));
+  sprite_->setPosition(x_, y_);
+  sprite_->setTextureRect(sf::IntRect(0, 0, 128, 128));
+  sprite_->setOrigin(64, 64);
+  sprite_->setScale(scale_, scale_);
+  sprite_->setRotation(angle_);
 
   sf::Vector2i frameSize{128, 128};
   std::vector<sf::IntRect> v{};
@@ -36,11 +37,11 @@ Asteroid::Asteroid()
   a.looping = true;
   a.frames = v;
 
-  animator_ = std::make_unique<Animator>(sprite_, a);
+  animator_ = std::make_shared<Animator>(sprite_, a);
 }
 
 void Asteroid::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-  target.draw(sprite_, states);
+  target.draw(*sprite_, states);
 }
 
 void Asteroid::update(sf::Time elapsed) {
@@ -49,5 +50,5 @@ void Asteroid::update(sf::Time elapsed) {
   x_ += std::sin(angle_ * DEG2RAD) * 0.2;
   y_ += -std::cos(angle_ * DEG2RAD) * 0.2;
 
-  sprite_.setPosition(x_, y_);
+  sprite_->setPosition(x_, y_);
 }

@@ -1,12 +1,17 @@
 #include "Game.hpp"
 
+#include <spdlog/spdlog.h>
+
 #include <cstdlib>
 
 Game::Game()
     : window_(sf::VideoMode(1200, 800), "Asteroid v1"),
       spaceShip_{},
       asteroids_{rand() % 90 + 10},
-      explosion_{} {}
+      explosions_{},
+      bullets_{} {
+  explosions_.emplace_back(Explosion{});
+}
 
 void Game::run(int fps) {
   sf::Clock clock{};
@@ -43,23 +48,38 @@ void Game::processEvents() {
   }
 }
 
-void Game::update([[maybe_unused]] sf::Time time_per_frame) {
+void Game::update(sf::Time time_per_frame) {
   spaceShip_.update(time_per_frame);
+
   for (auto& a : asteroids_) {
     a.update(time_per_frame);
   }
-  explosion_.update(time_per_frame);
+
+  for (auto& e : explosions_) {
+    e.update(time_per_frame);
+  }
+
+  for (auto& b : bullets_) {
+    b.update(time_per_frame);
+  }
 }
 
 void Game::render() {
   window_.clear();
 
-  for (auto& a : asteroids_) {
+  for (const auto& a : asteroids_) {
     window_.draw(a);
   }
 
+  for (const auto& e : explosions_) {
+    window_.draw(e);
+  }
+
+  for (const auto& b : bullets_) {
+    window_.draw(b);
+  }
+
   window_.draw(spaceShip_);
-  window_.draw(explosion_);
 
   window_.display();
 }

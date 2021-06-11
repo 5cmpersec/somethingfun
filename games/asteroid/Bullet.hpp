@@ -1,17 +1,11 @@
 #pragma once
 
-#include "Animator.hpp"
-
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 
-#include <memory>
-
-#include <spdlog/spdlog.h>
-
-class Explosion final : public sf::Drawable {
+class Bullet final : public sf::Drawable {
  public:
-  Explosion();
+  Bullet();
 
  public:
   void update(sf::Time elapsed);
@@ -20,9 +14,9 @@ class Explosion final : public sf::Drawable {
   void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
  private:
+  sf::Sprite sprite_;
   float x_;
   float y_;
-
-  SpritePtr sprite_{nullptr};
-  AnimatorPtr animator_{nullptr};
+  float angle_;
+  float speed_;
 };

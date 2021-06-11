@@ -3,8 +3,14 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 
+#include <memory>
 #include <string>
 #include <vector>
+
+class Animator;
+
+using SpritePtr = std::shared_ptr<sf::Sprite>;
+using AnimatorPtr = std::shared_ptr<Animator>;
 
 struct Animation {
   std::string name{""};
@@ -15,12 +21,12 @@ struct Animation {
 
 class Animator {
  public:
-  Animator(sf::Sprite& sprite, Animation animation);
+  Animator(SpritePtr sprite, Animation animation);
 
   void update(const sf::Time& elapsed);
 
  private:
-  sf::Sprite& sprite_;
+  SpritePtr sprite_;
   Animation animation_;
 
   sf::Time current_time_{sf::Time::Zero};

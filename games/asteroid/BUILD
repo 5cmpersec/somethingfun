@@ -15,6 +15,8 @@ cc_binary(
         "AssetManager.hpp",
         "Asteroid.cpp",
         "Asteroid.hpp",
+        "Bullet.cpp",
+        "Bullet.hpp",
         "Explosion.cpp",
         "Explosion.hpp",
         "Game.cpp",

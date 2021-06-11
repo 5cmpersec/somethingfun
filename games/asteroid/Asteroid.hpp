@@ -18,12 +18,12 @@ class Asteroid final : public sf::Drawable {
   void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
  private:
-  sf::Sprite sprite_;
   float x_;
   float y_;
   float angle_;
   float speed_;
   float scale_;
 
-  std::unique_ptr<Animator> animator_{nullptr};
+  SpritePtr sprite_{nullptr};
+  AnimatorPtr animator_{nullptr};
 };
