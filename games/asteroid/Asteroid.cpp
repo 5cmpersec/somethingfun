@@ -13,7 +13,8 @@ Asteroid::Asteroid()
       y_{std::rand() % 800},
       angle_{std::rand() % 360},
       speed_{std::rand() % 15 + 1},
-      scale_{(std::rand() % 8 + 1) * 0.1} {
+      scale_{(std::rand() % 8 + 1) * 0.1},
+      active_{true} {
   sprite_ = std::make_shared<sf::Sprite>(
       AssetManager::getInstance().GetTexture("asteroids.png"));
   sprite_->setPosition(x_, y_);
@@ -51,4 +52,16 @@ void Asteroid::update(sf::Time elapsed) {
   y_ += -std::cos(angle_ * DEG2RAD) * 0.2;
 
   sprite_->setPosition(x_, y_);
+}
+
+sf::FloatRect Asteroid::Bounds() const {
+  return sprite_->getGlobalBounds();
+}
+
+void Asteroid::setActive(bool active) {
+  active_ = active;
+}
+
+bool Asteroid::isActive() const {
+  return active_ == true;
 }

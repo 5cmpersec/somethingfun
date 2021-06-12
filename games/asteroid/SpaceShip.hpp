@@ -9,6 +9,8 @@ class SpaceShip final : public sf::Drawable {
 
  public:
   void update(sf::Time elapsed);
+  sf::Vector2f Position() const;
+  float Angle() const;
 
  private:
   void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

@@ -51,3 +51,11 @@ void SpaceShip::update(sf::Time elapsed) {
   sprite_.setPosition(x_, y_);
   sprite_.setRotation(angle_);
 }
+
+sf::Vector2f SpaceShip::Position() const {
+  return {x_, y_};
+}
+
+float SpaceShip::Angle() const {
+  return angle_;
+}

@@ -24,10 +24,12 @@ class Animator {
   Animator(SpritePtr sprite, Animation animation);
 
   void update(const sf::Time& elapsed);
+  bool isDone() const;
 
  private:
   SpritePtr sprite_;
   Animation animation_;
+  bool isDone_{false};
 
   sf::Time current_time_{sf::Time::Zero};
 };

@@ -7,15 +7,18 @@
 
 constexpr float DEG2RAD = 0.0174532925f;
 
-Bullet::Bullet()
+Bullet::Bullet(float x, float y, float angle)
     : sprite_{AssetManager::getInstance().GetTexture("spaceship.png")},
-      x_{400},
-      y_{400},
-      angle_{0.0},
-      speed_{15} {
+      x_{x},
+      y_{y},
+      angle_{angle},
+      speed_{15},
+      active_{true} {
   sprite_.setTextureRect(sf::IntRect(4, 130, 4, 10));
   sprite_.setOrigin(2, 5);
   sprite_.setScale(3.0, 3.0);
+  sprite_.setPosition(x_, y_);
+  sprite_.setRotation(angle_);
 }
 
 void Bullet::draw(sf::RenderTarget& target, sf::RenderStates states) const {
@@ -32,5 +35,16 @@ void Bullet::update(sf::Time elapsed) {
   y_ += dy;
 
   sprite_.setPosition(x_, y_);
-  sprite_.setRotation(angle_);
+}
+
+sf::FloatRect Bullet::Bounds() const {
+  return sprite_.getGlobalBounds();
+}
+
+void Bullet::setActive(bool active) {
+  active_ = active;
+}
+
+bool Bullet::isActive() const {
+  return active_ == true;
 }

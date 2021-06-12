@@ -17,7 +17,12 @@ void Animator::update(const sf::Time& elapsed) {
     current_frame %= num_frames;
   } else if (current_frame >= num_frames) {
     current_frame = num_frames - 1;
+    isDone_ = true;
   }
 
   sprite_->setTextureRect(animation_.frames[current_frame]);
+}
+
+bool Animator::isDone() const {
+  return isDone_;
 }

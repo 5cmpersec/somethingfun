@@ -1,7 +1,6 @@
 #include "Game.hpp"
 
 #include <spdlog/spdlog.h>
-
 #include <cstdlib>
 
 Game::Game()
@@ -9,9 +8,7 @@ Game::Game()
       spaceShip_{},
       asteroids_{rand() % 90 + 10},
       explosions_{},
-      bullets_{} {
-  explosions_.emplace_back(Explosion{});
-}
+      bullets_{} {}
 
 void Game::run(int fps) {
   sf::Clock clock{};
@@ -42,6 +39,11 @@ void Game::processEvents() {
       case sf::Event::EventType::Closed:
         window_.close();
         break;
+      case sf::Event::EventType::KeyPressed:
+        if (event.key.code == sf::Keyboard::Space) {
+          handleSpaceshipFire();
+        }
+        break;
       default:
         break;
     }
@@ -49,6 +51,10 @@ void Game::processEvents() {
 }
 
 void Game::update(sf::Time time_per_frame) {
+  handleExpiredExplosions();
+  handleObjectOutofBound();
+  handleCollision();
+
   spaceShip_.update(time_per_frame);
 
   for (auto& a : asteroids_) {
@@ -65,6 +71,8 @@ void Game::update(sf::Time time_per_frame) {
 }
 
 void Game::render() {
+  spdlog::info("Render: {} asteroids, {} bullets, {} explosions",
+               asteroids_.size(), bullets_.size(), explosions_.size());
   window_.clear();
 
   for (const auto& a : asteroids_) {
@@ -80,6 +88,52 @@ void Game::render() {
   }
 
   window_.draw(spaceShip_);
-
   window_.display();
+}
+
+void Game::handleSpaceshipFire() {
+  bullets_.emplace_back(spaceShip_.Position().x, spaceShip_.Position().y,
+                        spaceShip_.Angle());
+}
+
+void Game::handleCollision() {
+  for (auto& a : asteroids_) {
+    for (auto& b : bullets_) {
+      sf::FloatRect rect{};
+      if (a.isActive() && b.isActive() &&
+          a.Bounds().intersects(b.Bounds(), rect)) {
+        a.setActive(false);
+        b.setActive(false);
+        explosions_.emplace_back(rect.left, rect.top);
+      }
+    }
+  }
+
+  auto pos = std::remove_if(begin(asteroids_), end(asteroids_),
+                            [](auto& e) { return !e.isActive(); });
+  asteroids_.erase(pos, end(asteroids_));
+
+  auto pos2 = std::remove_if(begin(bullets_), end(bullets_),
+                             [](auto& e) { return !e.isActive(); });
+  bullets_.erase(pos2, end(bullets_));
+}
+
+void Game::handleObjectOutofBound() {
+  const sf::FloatRect bound{0, 0, 1200, 800};
+
+  auto pos = std::remove_if(
+      begin(asteroids_), end(asteroids_),
+      [&bound](auto& e) { return !e.Bounds().intersects(bound); });
+  asteroids_.erase(pos, end(asteroids_));
+
+  auto pos2 = std::remove_if(begin(bullets_), end(bullets_), [&bound](auto& e) {
+    return !e.Bounds().intersects(bound);
+  });
+  bullets_.erase(pos2, end(bullets_));
+}
+
+void Game::handleExpiredExplosions() {
+  auto pos = std::remove_if(begin(explosions_), end(explosions_),
+                            [](auto& e) { return e.isDoneAnimation(); });
+  explosions_.erase(pos, end(explosions_));
 }

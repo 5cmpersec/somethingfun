@@ -9,10 +9,10 @@
 
 constexpr float DEG2RAD = 0.0174532925f;
 
-Explosion::Explosion() : x_{400}, y_{400} {
+Explosion::Explosion(float x, float y) : x_{x}, y_{y} {
   sprite_ = std::make_shared<sf::Sprite>(
       AssetManager::getInstance().GetTexture("explosion.png")),
-  sprite_->setScale(3.0, 3.0);
+  sprite_->setScale(2.0, 2.0);
   sprite_->setPosition(x_, y_);
   sprite_->setTextureRect(sf::IntRect(0, 0, 50, 50));
 
@@ -24,8 +24,8 @@ Explosion::Explosion() : x_{400}, y_{400} {
 
   Animation a;
   a.name = "Explosion";
-  a.duration = sf::seconds(2);
-  a.looping = true;
+  a.duration = sf::seconds(1);
+  a.looping = false;
   a.frames = v;
 
   animator_ = std::make_shared<Animator>(sprite_, a);
@@ -37,4 +37,8 @@ void Explosion::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 
 void Explosion::update(sf::Time elapsed) {
   animator_->update(elapsed);
+}
+
+bool Explosion::isDoneAnimation() const {
+  return animator_->isDone();
 }

@@ -5,16 +5,13 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 
-#include <memory>
-
-#include <spdlog/spdlog.h>
-
 class Explosion final : public sf::Drawable {
  public:
-  Explosion();
+  Explosion(float x, float y);
 
  public:
   void update(sf::Time elapsed);
+  bool isDoneAnimation() const;
 
  private:
   void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

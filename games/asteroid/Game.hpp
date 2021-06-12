@@ -18,6 +18,11 @@ class Game final : sf::NonCopyable {
   void update(sf::Time delta);
   void render();
 
+  void handleSpaceshipFire();
+  void handleCollision();
+  void handleObjectOutofBound();
+  void handleExpiredExplosions();
+
  private:
   sf::RenderWindow window_;
   SpaceShip spaceShip_;

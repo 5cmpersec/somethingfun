@@ -13,6 +13,10 @@ class Asteroid final : public sf::Drawable {
 
  public:
   void update(sf::Time elapsed);
+  sf::FloatRect Bounds() const;
+
+  void setActive(bool active);
+  bool isActive() const;
 
  private:
   void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
@@ -23,6 +27,7 @@ class Asteroid final : public sf::Drawable {
   float angle_;
   float speed_;
   float scale_;
+  bool active_;
 
   SpritePtr sprite_{nullptr};
   AnimatorPtr animator_{nullptr};
