@@ -22,6 +22,7 @@ class Game final : sf::NonCopyable {
   void handleCollision();
   void handleObjectOutofBound();
   void handleExpiredExplosions();
+  void handleReset();
 
  private:
   sf::RenderWindow window_;

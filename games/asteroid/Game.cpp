@@ -42,7 +42,10 @@ void Game::processEvents() {
       case sf::Event::EventType::KeyPressed:
         if (event.key.code == sf::Keyboard::Space) {
           handleSpaceshipFire();
+        } else if (event.key.code == sf::Keyboard::R) {
+          handleReset();
         }
+
         break;
       default:
         break;
@@ -99,12 +102,10 @@ void Game::handleSpaceshipFire() {
 void Game::handleCollision() {
   for (auto& a : asteroids_) {
     for (auto& b : bullets_) {
-      sf::FloatRect rect{};
-      if (a.isActive() && b.isActive() &&
-          a.Bounds().intersects(b.Bounds(), rect)) {
+      if (a.isActive() && b.isActive() && a.Bounds().intersects(b.Bounds())) {
         a.setActive(false);
         b.setActive(false);
-        explosions_.emplace_back(rect.left, rect.top);
+        explosions_.emplace_back(b.Bounds().left, b.Bounds().top);
       }
     }
   }
@@ -136,4 +137,11 @@ void Game::handleExpiredExplosions() {
   auto pos = std::remove_if(begin(explosions_), end(explosions_),
                             [](auto& e) { return e.isDoneAnimation(); });
   explosions_.erase(pos, end(explosions_));
+}
+
+void Game::handleReset() {
+  auto size = asteroids_.size();
+  for (int i = 0; i + size <= 100; ++i) {
+    asteroids_.emplace_back(Asteroid{});
+  }
 }
