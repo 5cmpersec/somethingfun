@@ -9,11 +9,11 @@
 constexpr float DEG2RAD = 0.0174532925f;
 
 Asteroid::Asteroid()
-    : x_{std::rand() % 1200},
-      y_{std::rand() % 800},
-      angle_{std::rand() % 360},
-      speed_{std::rand() % 15 + 1},
-      scale_{(std::rand() % 8 + 1) * 0.1},
+    : x_{static_cast<float>(std::rand() % 1200)},
+      y_{static_cast<float>(std::rand() % 800)},
+      angle_{static_cast<float>(std::rand() % 360)},
+      speed_{static_cast<float>(std::rand() % 15 + 1)},
+      scale_{(std::rand() % 8 + 1) * 0.1f},
       active_{true} {
   sprite_ = std::make_shared<sf::Sprite>(
       AssetManager::getInstance().GetTexture("asteroids.png"));
@@ -43,6 +43,15 @@ Asteroid::Asteroid()
 
 void Asteroid::draw(sf::RenderTarget& target, sf::RenderStates states) const {
   target.draw(*sprite_, states);
+
+  // box for debug
+  const auto& bound = sprite_->getGlobalBounds();
+  sf::RectangleShape box{sf::Vector2f{bound.width, bound.height}};
+  box.setPosition(bound.left, bound.top);
+  box.setFillColor(sf::Color::Transparent);
+  box.setOutlineColor(sf::Color::Red);
+  box.setOutlineThickness(1.f);
+  target.draw(box, states);
 }
 
 void Asteroid::update(sf::Time elapsed) {
