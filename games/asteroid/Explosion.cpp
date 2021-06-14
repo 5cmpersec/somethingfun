@@ -12,9 +12,10 @@ constexpr float DEG2RAD = 0.0174532925f;
 Explosion::Explosion(float x, float y) : x_{x}, y_{y} {
   sprite_ = std::make_shared<sf::Sprite>(
       AssetManager::getInstance().GetTexture("explosion.png")),
+  sprite_->setOrigin(25, 25);
+  sprite_->setTextureRect(sf::IntRect(0, 0, 50, 50));
   sprite_->setScale(2.0, 2.0);
   sprite_->setPosition(x_, y_);
-  sprite_->setTextureRect(sf::IntRect(0, 0, 50, 50));
 
   sf::Vector2i frameSize{50, 50};
   std::vector<sf::IntRect> v{};
