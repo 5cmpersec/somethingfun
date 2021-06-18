@@ -2,12 +2,6 @@
 
 #include "AssetManager.hpp"
 
-#include <algorithm>
-#include <cmath>
-#include <cstdlib>
-#include <iostream>
-
-constexpr float DEG2RAD = 0.0174532925f;
 
 Explosion::Explosion(float x, float y) : x_{x}, y_{y} {
   sprite_ = std::make_shared<sf::Sprite>(

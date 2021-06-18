@@ -12,7 +12,6 @@ Bullet::Bullet(float x, float y, float angle)
       x_{x},
       y_{y},
       angle_{angle},
-      speed_{15},
       active_{true} {
   sprite_.setTextureRect(sf::IntRect(4, 130, 4, 10));
   sprite_.setOrigin(2, 5);

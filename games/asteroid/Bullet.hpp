@@ -22,7 +22,6 @@ class Bullet final : public sf::Drawable {
   float x_;
   float y_;
   float angle_;
-  float speed_;
 
   bool active_;
 };
