@@ -56,3 +56,7 @@ void Bullet::setActive(bool active) {
 bool Bullet::isActive() const {
   return active_ == true;
 }
+
+const sf::Sprite& Bullet::Sprite() const {
+  return sprite_;
+}

@@ -74,3 +74,7 @@ void Asteroid::setActive(bool active) {
 bool Asteroid::isActive() const {
   return active_ == true;
 }
+
+const sf::Sprite& Asteroid::Sprite() const {
+  return *sprite_;
+}

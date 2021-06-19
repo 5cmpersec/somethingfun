@@ -24,6 +24,8 @@ class Game final : sf::NonCopyable {
   void handleExpiredExplosions();
   void handleReset();
 
+  static bool isCollide(const sf::Sprite& left, const sf::Sprite& right);
+
  private:
   sf::RenderWindow window_;
   SpaceShip spaceShip_;

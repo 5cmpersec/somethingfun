@@ -2,7 +2,6 @@
 
 #include "AssetManager.hpp"
 
-
 Explosion::Explosion(float x, float y) : x_{x}, y_{y} {
   sprite_ = std::make_shared<sf::Sprite>(
       AssetManager::getInstance().GetTexture("explosion.png")),

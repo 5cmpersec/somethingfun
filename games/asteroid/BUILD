@@ -17,6 +17,8 @@ cc_binary(
         "Asteroid.hpp",
         "Bullet.cpp",
         "Bullet.hpp",
+        "Collision.cpp",
+        "Collision.hpp",
         "Explosion.cpp",
         "Explosion.hpp",
         "Game.cpp",

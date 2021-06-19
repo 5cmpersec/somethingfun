@@ -1,5 +1,7 @@
 #include "Game.hpp"
 
+#include "Collision.hpp"
+
 #include <spdlog/spdlog.h>
 #include <cstdlib>
 
@@ -102,7 +104,7 @@ void Game::handleSpaceshipFire() {
 void Game::handleCollision() {
   for (auto& a : asteroids_) {
     for (auto& b : bullets_) {
-      if (a.isActive() && b.isActive() && a.Bounds().intersects(b.Bounds())) {
+      if (a.isActive() && b.isActive() && isCollide(a.Sprite(), b.Sprite())) {
         a.setActive(false);
         b.setActive(false);
         explosions_.emplace_back(b.Bounds().left, b.Bounds().top);
@@ -144,4 +146,8 @@ void Game::handleReset() {
   for (int i = 0; i + size <= 100; ++i) {
     asteroids_.emplace_back(Asteroid{});
   }
+}
+
+bool Game::isCollide(const sf::Sprite& left, const sf::Sprite& right) {
+  return Collision::PixelPerfectTest(left, right);
 }

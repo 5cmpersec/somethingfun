@@ -14,6 +14,7 @@ class Asteroid final : public sf::Drawable {
  public:
   void update(sf::Time elapsed);
   sf::FloatRect Bounds() const;
+  const sf::Sprite& Sprite() const;
 
   void setActive(bool active);
   bool isActive() const;
