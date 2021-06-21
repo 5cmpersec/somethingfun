@@ -23,7 +23,7 @@ sf::Texture& AssetManager::GetTexture(std::string_view filename) {
 }
 
 std::string AssetManager::ResourcesDirectory() {
-  auto* dir = std::getenv("RESOURCES_DIR");
+  const auto* dir = std::getenv("RESOURCES_DIR");
   if (dir == nullptr) {
     return "";
   }

@@ -34,13 +34,8 @@ void Bullet::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 }
 
 void Bullet::update(sf::Time elapsed) {
-  float dx{0.0}, dy{0.0};
-
-  dx += std::sin(angle_ * DEG2RAD) * 3;
-  dy += -std::cos(angle_ * DEG2RAD) * 3;
-
-  x_ += dx;
-  y_ += dy;
+  x_ += std::sin(angle_ * DEG2RAD) * 3;
+  y_ -= std::cos(angle_ * DEG2RAD) * 3;
 
   sprite_.setPosition(x_, y_);
 }

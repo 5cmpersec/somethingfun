@@ -23,7 +23,7 @@ Asteroid::Asteroid()
   sprite_->setScale(scale_, scale_);
   sprite_->setRotation(angle_);
 
-  sf::Vector2i frameSize{128, 128};
+  const sf::Vector2i frameSize{128, 128};
   std::vector<sf::IntRect> v{};
   int row = 4 * (rand() % 2);
   for (int i = row; i < row + 4; ++i)
@@ -32,13 +32,8 @@ Asteroid::Asteroid()
                      frameSize.y);
   v.pop_back();
 
-  Animation a;
-  a.name = "Asteroid_1";
-  a.duration = sf::seconds(1);
-  a.looping = true;
-  a.frames = v;
-
-  animator_ = std::make_shared<Animator>(sprite_, a);
+  Animation a{"Asteroid_1", sf::seconds(1), true, v};
+  animator_ = std::make_shared<Animator>(sprite_, std::move(a));
 }
 
 void Asteroid::draw(sf::RenderTarget& target, sf::RenderStates states) const {

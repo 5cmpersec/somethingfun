@@ -10,19 +10,14 @@ Explosion::Explosion(float x, float y) : x_{x}, y_{y} {
   sprite_->setScale(2.0, 2.0);
   sprite_->setPosition(x_, y_);
 
-  sf::Vector2i frameSize{50, 50};
+  const sf::Vector2i frameSize{50, 50};
   std::vector<sf::IntRect> v{};
   for (int i = 0; i < 5; ++i) {
     v.emplace_back(frameSize.x * i, 0, frameSize.x, frameSize.y);
   }
 
-  Animation a;
-  a.name = "Explosion";
-  a.duration = sf::seconds(1);
-  a.looping = false;
-  a.frames = v;
-
-  animator_ = std::make_shared<Animator>(sprite_, a);
+  Animation a{"Explosion", sf::seconds(1), false, v};
+  animator_ = std::make_shared<Animator>(sprite_, std::move(a));
 }
 
 void Explosion::draw(sf::RenderTarget& target, sf::RenderStates states) const {

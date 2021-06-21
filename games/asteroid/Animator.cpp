@@ -8,8 +8,8 @@ Animator::Animator(SpritePtr sprite, Animation animation)
 void Animator::update(const sf::Time& elapsed) {
   current_time_ += elapsed;
 
-  auto num_frames = animation_.frames.size();
-  float frame_per_second = animation_.duration.asSeconds() / num_frames;
+  const auto num_frames = animation_.frames.size();
+  const auto frame_per_second = animation_.duration.asSeconds() / num_frames;
   auto current_frame =
       static_cast<size_t>(current_time_.asSeconds() / frame_per_second);
 
