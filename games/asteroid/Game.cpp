@@ -10,7 +10,8 @@ Game::Game()
       spaceShip_{},
       asteroids_{rand() % 90 + 10},
       explosions_{},
-      bullets_{} {}
+      bullets_{},
+      shouldRenderBounds_{false} {}
 
 void Game::run(int fps) {
   sf::Clock clock{};
@@ -46,6 +47,8 @@ void Game::processEvents() {
           handleSpaceshipFire();
         } else if (event.key.code == sf::Keyboard::R) {
           handleReset();
+        } else if (event.key.code == sf::Keyboard::B) {
+          shouldRenderBounds_ = !shouldRenderBounds_;
         }
 
         break;
@@ -90,6 +93,10 @@ void Game::render() {
 
   for (const auto& b : bullets_) {
     window_.draw(b);
+  }
+
+  if (shouldRenderBounds_) {
+    renderBounds();
   }
 
   window_.draw(spaceShip_);
@@ -150,4 +157,26 @@ void Game::handleReset() {
 
 bool Game::isCollide(const sf::Sprite& left, const sf::Sprite& right) {
   return Collision::PixelPerfectTest(left, right);
+}
+
+void Game::renderBounds() {
+  for (const auto& a : asteroids_) {
+    const auto& bound = a.Bounds();
+    sf::RectangleShape box{sf::Vector2f{bound.width, bound.height}};
+    box.setPosition(bound.left, bound.top);
+    box.setFillColor(sf::Color::Transparent);
+    box.setOutlineColor(sf::Color::Red);
+    box.setOutlineThickness(1.f);
+    window_.draw(box);
+  }
+
+  for (const auto& b : bullets_) {
+    const auto& bound = b.Bounds();
+    sf::RectangleShape box{sf::Vector2f{bound.width, bound.height}};
+    box.setPosition(bound.left, bound.top);
+    box.setFillColor(sf::Color::Transparent);
+    box.setOutlineColor(sf::Color::Blue);
+    box.setOutlineThickness(1.f);
+    window_.draw(box);
+  }
 }

@@ -24,6 +24,8 @@ class Game final : sf::NonCopyable {
   void handleExpiredExplosions();
   void handleReset();
 
+  void renderBounds();
+
   static bool isCollide(const sf::Sprite& left, const sf::Sprite& right);
 
  private:
@@ -32,4 +34,5 @@ class Game final : sf::NonCopyable {
   std::vector<Asteroid> asteroids_;
   std::vector<Explosion> explosions_;
   std::vector<Bullet> bullets_;
+  bool shouldRenderBounds_;
 };

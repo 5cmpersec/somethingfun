@@ -38,15 +38,6 @@ Asteroid::Asteroid()
 
 void Asteroid::draw(sf::RenderTarget& target, sf::RenderStates states) const {
   target.draw(*sprite_, states);
-
-  // box for debug
-  const auto& bound = sprite_->getGlobalBounds();
-  sf::RectangleShape box{sf::Vector2f{bound.width, bound.height}};
-  box.setPosition(bound.left, bound.top);
-  box.setFillColor(sf::Color::Transparent);
-  box.setOutlineColor(sf::Color::Red);
-  box.setOutlineThickness(1.f);
-  target.draw(box, states);
 }
 
 void Asteroid::update(sf::Time elapsed) {
