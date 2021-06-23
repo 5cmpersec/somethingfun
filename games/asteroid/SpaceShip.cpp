@@ -22,9 +22,6 @@ void SpaceShip::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 }
 
 void SpaceShip::update(sf::Time elapsed) {
-  float dx{0.0}, dy{0.0};
-  bool moving{false};
-
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
     angle_ += 3;
   }
@@ -34,19 +31,9 @@ void SpaceShip::update(sf::Time elapsed) {
   }
 
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-    moving = true;
-    dx += std::sin(angle_ * DEG2RAD) * 3;
-    dy += -std::cos(angle_ * DEG2RAD) * 3;
+    x_ += std::sin(angle_ * DEG2RAD) * 3;
+    y_ -= std::cos(angle_ * DEG2RAD) * 3;
   }
-
-  // angle_ = std::clamp(angle_, -360.f, 360.f);
-
-  if (moving) {
-    x_ += dx;
-    y_ += dy;
-  }
-
-  // angle *= elapsed.asSeconds() * speed_;
 
   sprite_.setPosition(x_, y_);
   sprite_.setRotation(angle_);
