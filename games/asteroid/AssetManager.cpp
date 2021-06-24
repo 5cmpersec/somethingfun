@@ -22,6 +22,22 @@ sf::Texture& AssetManager::GetTexture(std::string_view filename) {
   }
 }
 
+sf::Font& AssetManager::GetFont(std::string_view filename) {
+  const std::string filepath =
+      m_resources_dir + "/font/" + std::string(filename);
+  const auto& it = m_Fonts.find(filepath);
+  if (it != m_Fonts.end()) {
+    return it->second;
+  } else {
+    sf::Font font;
+    if (!font.loadFromFile(filepath)) {
+      throw std::runtime_error("Cannot load font: " + filepath);
+    }
+    m_Fonts[filepath] = font;
+    return m_Fonts.at(filepath);
+  }
+}
+
 std::string AssetManager::ResourcesDirectory() {
   const auto* dir = std::getenv("RESOURCES_DIR");
   if (dir == nullptr) {
