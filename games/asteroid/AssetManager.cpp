@@ -1,5 +1,6 @@
 #include "AssetManager.hpp"
 
+#include <spdlog/fmt/fmt.h>
 #include <cstdlib>
 
 AssetManager& AssetManager::getInstance() {
@@ -8,34 +9,34 @@ AssetManager& AssetManager::getInstance() {
 }
 
 sf::Texture& AssetManager::GetTexture(std::string_view filename) {
-  const std::string filepath = m_resources_dir + '/' + std::string(filename);
+  const std::string filepath = fmt::format("{}/{}", m_res_dir, filename);
   const auto& it = m_Textures.find(filepath);
   if (it != m_Textures.end()) {
     return it->second;
-  } else {
-    sf::Texture texture;
-    if (!texture.loadFromFile(filepath)) {
-      throw std::runtime_error("Cannot load texture: " + filepath);
-    }
-    m_Textures[filepath] = texture;
-    return m_Textures.at(filepath);
   }
+
+  sf::Texture texture;
+  if (!texture.loadFromFile(filepath)) {
+    throw std::runtime_error("Cannot load texture: " + filepath);
+  }
+
+  m_Textures[filepath] = std::move(texture);
+  return m_Textures.at(filepath);
 }
 
 sf::Font& AssetManager::GetFont(std::string_view filename) {
-  const std::string filepath =
-      m_resources_dir + "/font/" + std::string(filename);
+  const std::string filepath = fmt::format("{}/font/{}", m_res_dir, filename);
   const auto& it = m_Fonts.find(filepath);
   if (it != m_Fonts.end()) {
     return it->second;
-  } else {
-    sf::Font font;
-    if (!font.loadFromFile(filepath)) {
-      throw std::runtime_error("Cannot load font: " + filepath);
-    }
-    m_Fonts[filepath] = font;
-    return m_Fonts.at(filepath);
   }
+
+  sf::Font font;
+  if (!font.loadFromFile(filepath)) {
+    throw std::runtime_error("Cannot load font: " + filepath);
+  }
+  m_Fonts[filepath] = std::move(font);
+  return m_Fonts.at(filepath);
 }
 
 std::string AssetManager::ResourcesDirectory() {
@@ -43,5 +44,6 @@ std::string AssetManager::ResourcesDirectory() {
   if (dir == nullptr) {
     return "";
   }
+
   return dir;
 }

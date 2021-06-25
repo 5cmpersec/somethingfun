@@ -18,5 +18,5 @@ class AssetManager final : sf::NonCopyable {
  private:
   std::map<std::string, sf::Texture> m_Textures{};
   std::map<std::string, sf::Font> m_Fonts{};
-  const std::string m_resources_dir{ResourcesDirectory()};
+  const std::string m_res_dir{ResourcesDirectory()};
 };
