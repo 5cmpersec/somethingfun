@@ -3,22 +3,25 @@
 #include "AssetManager.hpp"
 #include "Collision.hpp"
 
+#include <spdlog/fmt/fmt.h>
 #include <spdlog/spdlog.h>
 #include <cstdlib>
 
 Game::Game()
     : window_(sf::VideoMode(1200, 800), "Asteroid v1"),
-      score_{},
+      scoreText_{},
+      score_{0},
       spaceShip_{},
-      asteroids_{rand() % 90 + 10},
+      asteroids_{static_cast<size_t>(rand() % 90 + 10)},
       explosions_{},
       bullets_{},
       shouldRenderBounds_{false} {
-  score_.setFont(AssetManager::getInstance().GetFont("EvilEmpire-4BBVK.ttf"));
-  score_.setPosition(10, 10);
-  score_.setString("Score: 0");
-  score_.setCharacterSize(32);
-  score_.setFillColor(sf::Color::Red);
+  scoreText_.setFont(
+      AssetManager::getInstance().GetFont("EvilEmpire-4BBVK.ttf"));
+  scoreText_.setPosition(10, 10);
+  scoreText_.setString("Score: 0");
+  scoreText_.setCharacterSize(32);
+  scoreText_.setFillColor(sf::Color::Red);
 }
 
 void Game::run(int fps) {
@@ -108,7 +111,10 @@ void Game::render() {
   }
 
   window_.draw(spaceShip_);
-  window_.draw(score_);
+
+  scoreText_.setString(fmt::format("Score: {}", score_));
+  window_.draw(scoreText_);
+
   window_.display();
 }
 
@@ -124,6 +130,7 @@ void Game::handleCollision() {
         a.setActive(false);
         b.setActive(false);
         explosions_.emplace_back(b.Bounds().left, b.Bounds().top);
+        score_++;
       }
     }
   }

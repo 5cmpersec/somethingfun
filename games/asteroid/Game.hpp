@@ -30,7 +30,8 @@ class Game final : sf::NonCopyable {
 
  private:
   sf::RenderWindow window_;
-  sf::Text score_;
+  sf::Text scoreText_;
+  sf::Int32 score_;
   SpaceShip spaceShip_;
   std::vector<Asteroid> asteroids_;
   std::vector<Explosion> explosions_;
