@@ -1,5 +1,5 @@
-#include "Bullet.hpp"
-#include "AssetManager.hpp"
+#include "bullet.h"
+#include "asset_manager.h"
 
 #include <algorithm>
 #include <cmath>
@@ -8,7 +8,7 @@
 constexpr float DEG2RAD = 0.0174532925f;
 
 Bullet::Bullet(float x, float y, float angle)
-    : sprite_{AssetManager::getInstance().GetTexture("spaceship.png")},
+    : sprite_{AssetManager::Instance().Texture("spaceship.png")},
       x_{x},
       y_{y},
       angle_{angle},
@@ -24,7 +24,7 @@ void Bullet::draw(sf::RenderTarget& target, sf::RenderStates states) const {
   target.draw(sprite_, states);
 }
 
-void Bullet::update(sf::Time elapsed) {
+void Bullet::Update(sf::Time elapsed) {
   x_ += std::sin(angle_ * DEG2RAD) * 3;
   y_ -= std::cos(angle_ * DEG2RAD) * 3;
 
@@ -35,11 +35,11 @@ sf::FloatRect Bullet::Bounds() const {
   return sprite_.getGlobalBounds();
 }
 
-void Bullet::setActive(bool active) {
+void Bullet::SetActive(bool active) {
   active_ = active;
 }
 
-bool Bullet::isActive() const {
+bool Bullet::IsActive() const {
   return active_ == true;
 }
 

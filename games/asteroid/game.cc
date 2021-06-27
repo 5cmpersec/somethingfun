@@ -1,7 +1,7 @@
-#include "Game.hpp"
+#include "game.h"
 
-#include "AssetManager.hpp"
-#include "Collision.hpp"
+#include "asset_manager.h"
+#include "collision.h"
 
 #include <spdlog/fmt/fmt.h>
 #include <spdlog/spdlog.h>
@@ -9,44 +9,43 @@
 
 Game::Game()
     : window_(sf::VideoMode(1200, 800), "Asteroid v1"),
-      scoreText_{},
+      score_text_{},
       score_{0},
-      spaceShip_{},
+      spaceship_{},
       asteroids_{static_cast<size_t>(rand() % 90 + 10)},
       explosions_{},
       bullets_{},
-      shouldRenderBounds_{false} {
-  scoreText_.setFont(
-      AssetManager::getInstance().GetFont("EvilEmpire-4BBVK.ttf"));
-  scoreText_.setPosition(10, 10);
-  scoreText_.setString("Score: 0");
-  scoreText_.setCharacterSize(32);
-  scoreText_.setFillColor(sf::Color::Red);
+      should_render_bounds_{false} {
+  score_text_.setFont(AssetManager::Instance().Font("EvilEmpire-4BBVK.ttf"));
+  score_text_.setPosition(10, 10);
+  score_text_.setString("Score: 0");
+  score_text_.setCharacterSize(32);
+  score_text_.setFillColor(sf::Color::Red);
 }
 
-void Game::run(int fps) {
+void Game::Run(int fps) {
   sf::Clock clock{};
   sf::Time time_since_last_update{sf::Time::Zero};
   sf::Time time_per_frame = sf::seconds(1.f / static_cast<float>(fps));
 
   while (window_.isOpen()) {
-    this->processEvents();
+    this->ProcessEvents();
 
     bool repaint{false};
     time_since_last_update += clock.restart();
     while (time_since_last_update > time_per_frame) {
       repaint = true;
       time_since_last_update -= time_per_frame;
-      this->update(time_per_frame);
+      this->Update(time_per_frame);
     }
 
     if (repaint) {
-      this->render();
+      this->Render();
     }
   }
 }
 
-void Game::processEvents() {
+void Game::ProcessEvents() {
   sf::Event event;
   while (window_.pollEvent(event)) {
     switch (event.type) {
@@ -55,11 +54,11 @@ void Game::processEvents() {
         break;
       case sf::Event::EventType::KeyPressed:
         if (event.key.code == sf::Keyboard::Space) {
-          handleSpaceshipFire();
+          HandleSpaceshipFire();
         } else if (event.key.code == sf::Keyboard::R) {
-          handleReset();
+          HandleReset();
         } else if (event.key.code == sf::Keyboard::B) {
-          shouldRenderBounds_ = !shouldRenderBounds_;
+          should_render_bounds_ = !should_render_bounds_;
         }
 
         break;
@@ -69,27 +68,27 @@ void Game::processEvents() {
   }
 }
 
-void Game::update(sf::Time time_per_frame) {
-  handleExpiredExplosions();
-  handleObjectOutofBound();
-  handleCollision();
+void Game::Update(sf::Time time_per_frame) {
+  HandleExpiredExplosions();
+  HandleObjectOutofBound();
+  HandleCollision();
 
-  spaceShip_.update(time_per_frame);
+  spaceship_.Update(time_per_frame);
 
   for (auto& a : asteroids_) {
-    a.update(time_per_frame);
+    a.Update(time_per_frame);
   }
 
   for (auto& e : explosions_) {
-    e.update(time_per_frame);
+    e.Update(time_per_frame);
   }
 
   for (auto& b : bullets_) {
-    b.update(time_per_frame);
+    b.Update(time_per_frame);
   }
 }
 
-void Game::render() {
+void Game::Render() {
   spdlog::info("Render: {} asteroids, {} bullets, {} explosions",
                asteroids_.size(), bullets_.size(), explosions_.size());
   window_.clear();
@@ -106,29 +105,29 @@ void Game::render() {
     window_.draw(b);
   }
 
-  if (shouldRenderBounds_) {
-    renderBounds();
+  if (should_render_bounds_) {
+    RenderBounds();
   }
 
-  window_.draw(spaceShip_);
+  window_.draw(spaceship_);
 
-  scoreText_.setString(fmt::format("Score: {}", score_));
-  window_.draw(scoreText_);
+  score_text_.setString(fmt::format("Score: {}", score_));
+  window_.draw(score_text_);
 
   window_.display();
 }
 
-void Game::handleSpaceshipFire() {
-  bullets_.emplace_back(spaceShip_.Position().x, spaceShip_.Position().y,
-                        spaceShip_.Angle());
+void Game::HandleSpaceshipFire() {
+  bullets_.emplace_back(spaceship_.Position().x, spaceship_.Position().y,
+                        spaceship_.Angle());
 }
 
-void Game::handleCollision() {
+void Game::HandleCollision() {
   for (auto& a : asteroids_) {
     for (auto& b : bullets_) {
-      if (a.isActive() && b.isActive() && isCollide(a.Sprite(), b.Sprite())) {
-        a.setActive(false);
-        b.setActive(false);
+      if (a.IsActive() && b.IsActive() && IsCollide(a.Sprite(), b.Sprite())) {
+        a.SetActive(false);
+        b.SetActive(false);
         explosions_.emplace_back(b.Bounds().left, b.Bounds().top);
         score_++;
       }
@@ -136,15 +135,15 @@ void Game::handleCollision() {
   }
 
   auto pos = std::remove_if(begin(asteroids_), end(asteroids_),
-                            [](auto& e) { return !e.isActive(); });
+                            [](auto& e) { return !e.IsActive(); });
   asteroids_.erase(pos, end(asteroids_));
 
   auto pos2 = std::remove_if(begin(bullets_), end(bullets_),
-                             [](auto& e) { return !e.isActive(); });
+                             [](auto& e) { return !e.IsActive(); });
   bullets_.erase(pos2, end(bullets_));
 }
 
-void Game::handleObjectOutofBound() {
+void Game::HandleObjectOutofBound() {
   const sf::FloatRect bound{0, 0, 1200, 800};
 
   auto pos = std::remove_if(
@@ -158,24 +157,24 @@ void Game::handleObjectOutofBound() {
   bullets_.erase(pos2, end(bullets_));
 }
 
-void Game::handleExpiredExplosions() {
+void Game::HandleExpiredExplosions() {
   auto pos = std::remove_if(begin(explosions_), end(explosions_),
-                            [](auto& e) { return e.isDoneAnimation(); });
+                            [](auto& e) { return e.IsDoneAnimation(); });
   explosions_.erase(pos, end(explosions_));
 }
 
-void Game::handleReset() {
+void Game::HandleReset() {
   auto size = asteroids_.size();
   for (int i = 0; i + size <= 100; ++i) {
     asteroids_.emplace_back(Asteroid{});
   }
 }
 
-bool Game::isCollide(const sf::Sprite& left, const sf::Sprite& right) {
-  return Collision::PixelPerfectTest(left, right);
+bool Game::IsCollide(const sf::Sprite& left, const sf::Sprite& right) {
+  return collision::PixelPerfectTest(left, right);
 }
 
-void Game::renderBounds() {
+void Game::RenderBounds() {
   for (const auto& a : asteroids_) {
     const auto& bound = a.Bounds();
     sf::RectangleShape box{sf::Vector2f{bound.width, bound.height}};

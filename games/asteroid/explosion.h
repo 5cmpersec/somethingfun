@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Animator.hpp"
+#include "animator.h"
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
@@ -10,8 +10,8 @@ class Explosion final : public sf::Drawable {
   Explosion(float x, float y);
 
  public:
-  void update(sf::Time elapsed);
-  bool isDoneAnimation() const;
+  void Update(sf::Time elapsed);
+  bool IsDoneAnimation() const;
 
  private:
   void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

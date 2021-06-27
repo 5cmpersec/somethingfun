@@ -38,7 +38,7 @@ it freely, subject to the following restrictions:
 
 #include <SFML/Graphics.hpp>
 
-namespace Collision {
+namespace collision {
 //////
 /// Test for a collision between two sprites by comparing the alpha values of
 /// overlapping pixels Supports scaling and rotation AlphaLimit: The threshold
@@ -76,6 +76,6 @@ bool CircleTest(const sf::Sprite& Object1, const sf::Sprite& Object2);
 /// Supports scaling and rotation
 //////
 bool BoundingBoxTest(const sf::Sprite& Object1, const sf::Sprite& Object2);
-}  // namespace Collision
+}  // namespace collision
 
 #endif /* COLLISION_H */

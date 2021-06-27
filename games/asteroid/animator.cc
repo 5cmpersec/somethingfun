@@ -1,11 +1,11 @@
-#include "Animator.hpp"
+#include "animator.h"
 
 #include <iostream>
 
 Animator::Animator(SpritePtr sprite, Animation animation)
     : sprite_(std::move(sprite)), animation_(std::move(animation)) {}
 
-void Animator::update(const sf::Time& elapsed) {
+void Animator::Update(const sf::Time& elapsed) {
   current_time_ += elapsed;
 
   const auto num_frames = animation_.frames.size();
@@ -17,12 +17,12 @@ void Animator::update(const sf::Time& elapsed) {
     current_frame %= num_frames;
   } else if (current_frame >= num_frames) {
     current_frame = num_frames - 1;
-    isDone_ = true;
+    is_done_ = true;
   }
 
   sprite_->setTextureRect(animation_.frames[current_frame]);
 }
 
-bool Animator::isDone() const {
-  return isDone_;
+bool Animator::IsDone() const {
+  return is_done_;
 }

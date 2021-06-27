@@ -1,4 +1,4 @@
-#include "Game.hpp"
+#include "game.h"
 
 #include <iostream>
 
@@ -7,7 +7,7 @@
 int main() {
   try {
     Game g{};
-    g.run(180);
+    g.Run(180);
   } catch (const std::exception& e) {
     spdlog::error("Exception: {}", e.what());
     return EXIT_FAILURE;

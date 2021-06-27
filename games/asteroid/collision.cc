@@ -1,12 +1,12 @@
 /*
- * File:   collision.cpp
+ * File:   collision.cc
  * Author: Nick (original version), ahnonay (SFML2 compatibility)
  */
-#include "Collision.hpp"
+#include "collision.h"
 #include <SFML/Graphics.hpp>
 #include <map>
 
-namespace Collision {
+namespace collision {
 class BitmaskManager {
  public:
   ~BitmaskManager() {
@@ -202,4 +202,4 @@ bool BoundingBoxTest(const sf::Sprite& Object1, const sf::Sprite& Object2) {
   }
   return true;
 }
-}  // namespace Collision
+}  // namespace collision

@@ -3,12 +3,12 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 
-class SpaceShip final : public sf::Drawable {
+class Spaceship final : public sf::Drawable {
  public:
-  SpaceShip();
+  Spaceship();
 
  public:
-  void update(sf::Time elapsed);
+  void Update(sf::Time elapsed);
   sf::Vector2f Position() const;
   float Angle() const;
 

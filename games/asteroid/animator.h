@@ -23,13 +23,13 @@ class Animator {
  public:
   Animator(SpritePtr sprite, Animation animation);
 
-  void update(const sf::Time& elapsed);
-  bool isDone() const;
+  void Update(const sf::Time& elapsed);
+  bool IsDone() const;
 
  private:
   SpritePtr sprite_;
   Animation animation_;
-  bool isDone_{false};
+  bool is_done_{false};
 
   sf::Time current_time_{sf::Time::Zero};
 };

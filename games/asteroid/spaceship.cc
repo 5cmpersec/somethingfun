@@ -1,5 +1,6 @@
-#include "SpaceShip.hpp"
-#include "AssetManager.hpp"
+#include "spaceship.h"
+
+#include "asset_manager.h"
 
 #include <algorithm>
 #include <cmath>
@@ -7,8 +8,8 @@
 
 constexpr float DEG2RAD = 0.0174532925f;
 
-SpaceShip::SpaceShip()
-    : sprite_{AssetManager::getInstance().GetTexture("spaceship.png")},
+Spaceship::Spaceship()
+    : sprite_{AssetManager::Instance().Texture("spaceship.png")},
       x_{300},
       y_{300},
       angle_{0.0},
@@ -17,11 +18,11 @@ SpaceShip::SpaceShip()
   sprite_.setOrigin(20, 20);
 }
 
-void SpaceShip::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+void Spaceship::draw(sf::RenderTarget& target, sf::RenderStates states) const {
   target.draw(sprite_, states);
 }
 
-void SpaceShip::update(sf::Time elapsed) {
+void Spaceship::Update(sf::Time elapsed) {
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
     angle_ += 3;
   }
@@ -39,10 +40,10 @@ void SpaceShip::update(sf::Time elapsed) {
   sprite_.setRotation(angle_);
 }
 
-sf::Vector2f SpaceShip::Position() const {
+sf::Vector2f Spaceship::Position() const {
   return {x_, y_};
 }
 
-float SpaceShip::Angle() const {
+float Spaceship::Angle() const {
   return angle_;
 }

@@ -1,5 +1,5 @@
-#include "Asteroid.hpp"
-#include "AssetManager.hpp"
+#include "asteroid.h"
+#include "asset_manager.h"
 
 #include <algorithm>
 #include <cmath>
@@ -16,7 +16,7 @@ Asteroid::Asteroid()
       scale_{(std::rand() % 8 + 1) * 0.1f},
       active_{true} {
   sprite_ = std::make_shared<sf::Sprite>(
-      AssetManager::getInstance().GetTexture("asteroids.png"));
+      AssetManager::Instance().Texture("asteroids.png"));
   sprite_->setPosition(x_, y_);
   sprite_->setTextureRect(sf::IntRect(0, 0, 128, 128));
   sprite_->setOrigin(64, 64);
@@ -40,8 +40,8 @@ void Asteroid::draw(sf::RenderTarget& target, sf::RenderStates states) const {
   target.draw(*sprite_, states);
 }
 
-void Asteroid::update(sf::Time elapsed) {
-  animator_->update(elapsed);
+void Asteroid::Update(sf::Time elapsed) {
+  animator_->Update(elapsed);
 
   x_ += std::sin(angle_ * DEG2RAD) * 0.2;
   y_ += -std::cos(angle_ * DEG2RAD) * 0.2;
@@ -53,11 +53,11 @@ sf::FloatRect Asteroid::Bounds() const {
   return sprite_->getGlobalBounds();
 }
 
-void Asteroid::setActive(bool active) {
+void Asteroid::SetActive(bool active) {
   active_ = active;
 }
 
-bool Asteroid::isActive() const {
+bool Asteroid::IsActive() const {
   return active_ == true;
 }
 

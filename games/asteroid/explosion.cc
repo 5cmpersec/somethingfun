@@ -1,10 +1,10 @@
-#include "Explosion.hpp"
+#include "explosion.h"
 
-#include "AssetManager.hpp"
+#include "asset_manager.h"
 
 Explosion::Explosion(float x, float y) : x_{x}, y_{y} {
   sprite_ = std::make_shared<sf::Sprite>(
-      AssetManager::getInstance().GetTexture("explosion.png")),
+      AssetManager::Instance().Texture("explosion.png")),
   sprite_->setOrigin(25, 25);
   sprite_->setTextureRect(sf::IntRect(0, 0, 50, 50));
   sprite_->setScale(2.0, 2.0);
@@ -24,10 +24,10 @@ void Explosion::draw(sf::RenderTarget& target, sf::RenderStates states) const {
   target.draw(*sprite_, states);
 }
 
-void Explosion::update(sf::Time elapsed) {
-  animator_->update(elapsed);
+void Explosion::Update(sf::Time elapsed) {
+  animator_->Update(elapsed);
 }
 
-bool Explosion::isDoneAnimation() const {
-  return animator_->isDone();
+bool Explosion::IsDoneAnimation() const {
+  return animator_->IsDone();
 }

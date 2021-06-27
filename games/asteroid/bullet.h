@@ -8,12 +8,12 @@ class Bullet final : public sf::Drawable {
   Bullet(float x, float y, float angle);
 
  public:
-  void update(sf::Time elapsed);
+  void Update(sf::Time elapsed);
   sf::FloatRect Bounds() const;
   const sf::Sprite& Sprite() const;
 
-  void setActive(bool active);
-  bool isActive() const;
+  void SetActive(bool active);
+  bool IsActive() const;
 
  private:
   void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
