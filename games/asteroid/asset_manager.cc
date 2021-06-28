@@ -17,11 +17,16 @@ sf::Texture& AssetManager::Texture(std::string_view filename) {
 
   sf::Texture texture;
   if (!texture.loadFromFile(filepath)) {
-    throw std::runtime_error("Cannot load texture: " + filepath);
+    throw std::runtime_error(fmt::format("Cannot load texture: {}", filepath));
   }
 
-  textures_[filepath] = std::move(texture);
-  return textures_.at(filepath);
+  auto ret = textures_.emplace(filepath, std::move(texture));
+  if (!ret.second) {
+    throw std::runtime_error(
+        fmt::format("Cannot insert texture: {}", filepath));
+  }
+
+  return ret.first->second;
 }
 
 sf::Font& AssetManager::Font(std::string_view filename) {
@@ -35,8 +40,13 @@ sf::Font& AssetManager::Font(std::string_view filename) {
   if (!font.loadFromFile(filepath)) {
     throw std::runtime_error("Cannot load font: " + filepath);
   }
-  fonts_[filepath] = std::move(font);
-  return fonts_.at(filepath);
+
+  auto ret = fonts_.emplace(filepath, std::move(font));
+  if (!ret.second) {
+    throw std::runtime_error(fmt::format("Cannot insert font: {}", filepath));
+  }
+
+  return ret.first->second;
 }
 
 std::string AssetManager::ResourcesDirectory() {
