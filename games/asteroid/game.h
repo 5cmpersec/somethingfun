@@ -1,5 +1,6 @@
 #pragma once
 
+#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 
@@ -37,4 +38,6 @@ class Game final : sf::NonCopyable {
   std::vector<Explosion> explosions_;
   std::vector<Bullet> bullets_;
   bool should_render_bounds_;
+  sf::Sound gunshot_sound_;
+  sf::Sound explosion_sound_;
 };

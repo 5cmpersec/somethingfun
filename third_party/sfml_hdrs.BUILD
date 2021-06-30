@@ -53,6 +53,7 @@ cc_library(
     visibility = ["//visibility:public"],
     deps = [
         ":system",
+        "@sfml_lib//:audio",
     ],
 )
 
@@ -66,5 +67,6 @@ cc_library(
     visibility = ["//visibility:public"],
     deps = [
         ":system",
+        "@sfml_lib//:audio",
     ],
 )

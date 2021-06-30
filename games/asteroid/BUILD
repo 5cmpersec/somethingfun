@@ -35,6 +35,7 @@ cc_binary(
         "//visibility:public",
     ],
     deps = [
+        "@sfml_hdrs//:audio",
         "@sfml_hdrs//:graphics",
         "@sfml_hdrs//:system",
         "@spdlog"

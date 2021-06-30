@@ -15,12 +15,18 @@ Game::Game()
       asteroids_{static_cast<size_t>(rand() % 90 + 10)},
       explosions_{},
       bullets_{},
-      should_render_bounds_{false} {
+      should_render_bounds_{false},
+      gunshot_sound_{},
+      explosion_sound_{} {
   score_text_.setFont(AssetManager::Instance().Font("EvilEmpire-4BBVK.ttf"));
   score_text_.setPosition(10, 10);
   score_text_.setString("Score: 0");
   score_text_.setCharacterSize(32);
   score_text_.setFillColor(sf::Color::Red);
+  gunshot_sound_.setBuffer(
+      AssetManager::Instance().SoundBuffer("laser-gun-shot.wav"));
+  explosion_sound_.setBuffer(
+      AssetManager::Instance().SoundBuffer("explosion.wav"));
 }
 
 void Game::Run(int fps) {
@@ -120,6 +126,8 @@ void Game::Render() {
 void Game::HandleSpaceshipFire() {
   bullets_.emplace_back(spaceship_.Position().x, spaceship_.Position().y,
                         spaceship_.Angle());
+
+  gunshot_sound_.play();
 }
 
 void Game::HandleCollision() {
@@ -130,6 +138,7 @@ void Game::HandleCollision() {
         b.SetActive(false);
         explosions_.emplace_back(b.Bounds().left, b.Bounds().top);
         score_++;
+        explosion_sound_.play();
       }
     }
   }
