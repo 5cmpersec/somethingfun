@@ -39,5 +39,5 @@ class Game final : sf::NonCopyable {
   std::vector<Bullet> bullets_;
   bool should_render_bounds_;
   sf::Sound gunshot_sound_;
-  sf::Sound explosion_sound_;
+  std::vector<sf::Sound> explosion_sounds_;
 };

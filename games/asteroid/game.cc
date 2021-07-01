@@ -17,7 +17,7 @@ Game::Game()
       bullets_{},
       should_render_bounds_{false},
       gunshot_sound_{},
-      explosion_sound_{} {
+      explosion_sounds_{} {
   score_text_.setFont(AssetManager::Instance().Font("EvilEmpire-4BBVK.ttf"));
   score_text_.setPosition(10, 10);
   score_text_.setString("Score: 0");
@@ -25,8 +25,6 @@ Game::Game()
   score_text_.setFillColor(sf::Color::Red);
   gunshot_sound_.setBuffer(
       AssetManager::Instance().SoundBuffer("laser-gun-shot.wav"));
-  explosion_sound_.setBuffer(
-      AssetManager::Instance().SoundBuffer("explosion.wav"));
 }
 
 void Game::Run(int fps) {
@@ -95,8 +93,10 @@ void Game::Update(sf::Time time_per_frame) {
 }
 
 void Game::Render() {
-  spdlog::info("Render: {} asteroids, {} bullets, {} explosions",
-               asteroids_.size(), bullets_.size(), explosions_.size());
+  spdlog::info(
+      "Render: {} asteroids, {} bullets, {} explosions, {} explosions sounds",
+      asteroids_.size(), bullets_.size(), explosions_.size(),
+      explosion_sounds_.size());
   window_.clear();
 
   for (const auto& a : asteroids_) {
@@ -138,7 +138,10 @@ void Game::HandleCollision() {
         b.SetActive(false);
         explosions_.emplace_back(b.Bounds().left, b.Bounds().top);
         score_++;
-        explosion_sound_.play();
+
+        sf::Sound sound{AssetManager::Instance().SoundBuffer("explosion.wav")};
+        explosion_sounds_.push_back(sound);
+        explosion_sounds_.back().play();
       }
     }
   }
@@ -150,6 +153,12 @@ void Game::HandleCollision() {
   auto pos2 = std::remove_if(begin(bullets_), end(bullets_),
                              [](auto& e) { return !e.IsActive(); });
   bullets_.erase(pos2, end(bullets_));
+
+  auto pos3 = std::remove_if(
+      begin(explosion_sounds_), end(explosion_sounds_), [](auto& e) {
+        return e.getStatus() == sf::SoundSource::Status::Stopped;
+      });
+  explosion_sounds_.erase(pos3, end(explosion_sounds_));
 }
 
 void Game::HandleObjectOutofBound() {
