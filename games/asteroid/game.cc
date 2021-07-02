@@ -146,19 +146,17 @@ void Game::HandleCollision() {
     }
   }
 
-  auto pos = std::remove_if(begin(asteroids_), end(asteroids_),
-                            [](auto& e) { return !e.IsActive(); });
-  asteroids_.erase(pos, end(asteroids_));
+  asteroids_.erase(std::remove_if(begin(asteroids_), end(asteroids_),
+                                  [](const auto& e) { return !e.IsActive(); }),
+                   end(asteroids_));
 
-  auto pos2 = std::remove_if(begin(bullets_), end(bullets_),
-                             [](auto& e) { return !e.IsActive(); });
-  bullets_.erase(pos2, end(bullets_));
+  bullets_.erase(std::remove_if(begin(bullets_), end(bullets_),
+                                [](const auto& e) { return !e.IsActive(); }),
+                 end(bullets_));
 
-  auto pos3 = std::remove_if(
-      begin(explosion_sounds_), end(explosion_sounds_), [](auto& e) {
-        return e.getStatus() == sf::SoundSource::Status::Stopped;
-      });
-  explosion_sounds_.erase(pos3, end(explosion_sounds_));
+  explosion_sounds_.remove_if([](const auto& e) {
+    return (e.getStatus() == sf::SoundSource::Status::Stopped);
+  });
 }
 
 void Game::HandleObjectOutofBound() {

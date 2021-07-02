@@ -5,6 +5,7 @@
 #include <spdlog/spdlog.h>
 
 int main() {
+  spdlog::set_pattern("[%Y-%m-%d %H:%M:%S.%e] %P %t [%^%l%$] %v");
   try {
     Game g{};
     g.Run(180);

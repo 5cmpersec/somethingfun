@@ -9,6 +9,9 @@
 #include "explosion.h"
 #include "spaceship.h"
 
+#include <list>
+#include <vector>
+
 class Game final : sf::NonCopyable {
  public:
   Game();
@@ -39,5 +42,5 @@ class Game final : sf::NonCopyable {
   std::vector<Bullet> bullets_;
   bool should_render_bounds_;
   sf::Sound gunshot_sound_;
-  std::vector<sf::Sound> explosion_sounds_;
+  std::list<sf::Sound> explosion_sounds_;
 };
