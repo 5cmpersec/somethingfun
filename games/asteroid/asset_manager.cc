@@ -9,7 +9,7 @@ AssetManager& AssetManager::Instance() {
 }
 
 sf::Texture& AssetManager::Texture(std::string_view filename) {
-  const std::string filepath = fmt::format("{}/{}", res_dir_, filename);
+  const std::string filepath = fmt::format("{}/image/{}", res_dir_, filename);
   const auto& it = textures_.find(filepath);
   if (it != textures_.end()) {
     return it->second;
